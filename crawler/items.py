@@ -19,6 +19,7 @@ class MusicGearItem(scrapy.Item):
     stock = scrapy.Field()
     classifiers = scrapy.Field()
 
+    unique_code_field = True
     unique_fields = ['code', 'color']
 
     json_schema_validation = {
