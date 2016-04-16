@@ -29,7 +29,7 @@ class MusicGearItem(scrapy.Item):
             'name': {
                 'type': 'string',
                 'minLength': 1,
-                'maxLength': 50
+                'maxLength': 120
             },
             'description': {'type': 'string'},
             'brand': {'type': 'string'},
