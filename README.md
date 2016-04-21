@@ -24,7 +24,7 @@ Run a command: `docker-compose run crawler scrapy crawl spiderdomain`
 ####1.) Install libraries required by pyquery and scrapy (both of them use lxml and lxml if some sys libraries will be missing)
 Run following command:
 
-`sudo apt-get install -y libxml2-dev libxslt1-dev zlib1g-dev libffi-dev python3-pip libssl-dev`
+`sudo apt-get install -y python3-pip python3-dev python3-lxml-dbg build-essential libssl-dev libffi-dev`
 
 ####2.) Install python libraries
 Make sure that you are using python 3.5.
