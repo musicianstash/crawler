@@ -34,6 +34,7 @@ Run following command:
 Make sure that you are using python 3.5.
 
 Open terminal and open project directory (root of the project). Then run following command:
+
 `pip install -r requirements.txt`
 
 ####3.) Run a spider
@@ -54,8 +55,10 @@ run one spider simultaneously they don't charge and also don't ask for any credi
 
 ####2.) Api Key and project ID to ENV variables
 Now copy paste **Api Key** and **project ID** from the `Code & Deploys` page on scrapinhub and set them as ENV variables.
-export SHUB_APIKEY=yourverylooooooongapikey
-export SHUB_PROJECT_ID=numericid
+
+`export SHUB_APIKEY=yourverylooooooongapikey`
+
+`export SHUB_PROJECT_ID=numericid`
 
 ####3.) Deploy
 Deploy crawler code to the scraping hub. Run following command:
