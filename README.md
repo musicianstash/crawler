@@ -46,7 +46,8 @@ Test out a spider. Run following command:
 ###scrapinghub
 
 ####1.) Login and create project
-- First you need to login/register to the spider manager on a [scrapinghub](https://dash.scrapinghub.com/account/login/) website.
+- First you need to login/register to the spider manager on a [scrapinghub](https://dash.scrapinghub.com/account/login/) website. To
+run one spider simultaneously they don't charge and also don't ask for any credit card.
 - Then you create a project if it's not already created.
 - Select a project that you created and click `Code & Deploys` on the left menu.
 - At the bottom of the page you have **Api Key** and **project ID**.
