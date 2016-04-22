@@ -31,7 +31,7 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
     )
 
     def parse_item(self, res):
-        res.meta['item_body'] = res.text
+        res.meta['item_body'] = res.body
         res.meta['item_url'] = res.url
         res.meta['item_data'] = res.json(res.pq('.adobeRecsProdData').text().strip())
         url = ('http://media.musiciansfriend.com/is/image/{}/?req=set,json,UTF-8&labelkey=label&'
@@ -52,7 +52,7 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
                           callback=super(MusiciansFriendSpider, self).parse_item)
 
     def process_item_response(self, res):
-        re_match = re.search(r's7sdkJSONResponse\(({.+}),"[^"]+"\);', res.text)
+        re_match = re.search(r's7sdkJSONResponse\(({.+}),"[^"]+"\);', res.body)
         res.meta['image_data'] = res.json(re_match.group(1))
         res = res.replace(body=res.meta['item_body'], url=res.meta['item_url'])
         res.pq = PyQuery(res.meta['item_body'])
