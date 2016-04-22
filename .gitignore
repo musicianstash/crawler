@@ -85,6 +85,9 @@ ENV/
 # Spyder project settings
 .spyderproject
 
+# Scrapinghub settings
+scrapinghub.yml
+
 # Rope project settings
 .ropeproject
 *.idea
