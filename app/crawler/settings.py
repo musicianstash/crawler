@@ -2,7 +2,7 @@
 
 # Scrapy settings for crawler project
 
-DEBUG = False
+DEBUG = True
 
 BOT_NAME = 'crawler'
 
