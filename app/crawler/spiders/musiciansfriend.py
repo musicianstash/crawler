@@ -2,13 +2,12 @@
 import re
 
 from pyquery import PyQuery
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule, Request
 
-from crawler.contrib.format import price_format
 from crawler.contrib.spiders.mixins.modular import ModularMixin
 from crawler.items import MusicGearItem
-
-from scrapy.spiders import CrawlSpider, Rule, Request
-from scrapy.linkextractors import LinkExtractor
+from crawler.contrib.format import price_format
 
 
 class MusiciansFriendSpider(ModularMixin, CrawlSpider):
@@ -19,6 +18,8 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
     spider_store = 'Musician Friend'
     spider_currency = 'THB'
     spider_countries = ['US', 'TH', 'GB']
+
+    download_delay = 0.5
 
     start_urls = ['http://www.musiciansfriend.com/']
 

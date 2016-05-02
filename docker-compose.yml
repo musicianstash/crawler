@@ -1,4 +1,16 @@
-crawler:
-    build: .
-    volumes:
-        - .:/srv/crawler
+version: '2'
+
+services:
+  crawler:
+    container_name: crawler
+    build: ./app
+    env_file: .env
+    ports:
+      - "6800:6800"
+    networks:
+      - default
+      - eap_default
+
+networks:
+  eap_default:
+    external: True

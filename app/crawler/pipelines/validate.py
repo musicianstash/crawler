@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from jsonschema import validate, ValidationError
-from ..contrib.exceptions import SchemaValidationException
+from crawler.contrib.exceptions import SchemaValidationException
 
 
 class ValidatePipeline(object):

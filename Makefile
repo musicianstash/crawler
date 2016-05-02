@@ -1,21 +1,35 @@
-.PHONY : crawler
+.PHONY: build app start remove status stopall run scrapyd pyclean
 
-crawler :
+build:
 	docker-compose build crawler
 
-run :
-	docker-compose run crawler scrapy crawl $(filter-out $@,$(MAKECMDGOALS))
+app:
+	docker-compose up -d
 
-deploy :
-	shub login
-	shub deploy-reqs $(SHUB_PROJECT_ID)
-	shub deploy $(SHUB_PROJECT_ID)
-	rm -r build
-	rm -r project.egg-info
-	rm -f setup.py
-	rm -f scrapinghub.yml
-	shub logout
+start:
+	docker-compose up
 
-pyclean :
+remove:
+	docker-compose stop && docker-compose rm -f
+
+down:
+	docker-compose down
+
+status:
+	docker-compose ps
+
+stopall:
+	docker stop $(docker ps -a -q)
+
+run:
+	docker-compose run --service-ports crawler scrapy crawl $(filter-out $@,$(MAKECMDGOALS))
+
+scrapyd:
+	docker-compose run --service-ports crawler scrapyd
+
+bash:
+	docker-compose run --service-ports crawler /bin/bash
+
+pyclean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete

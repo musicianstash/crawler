@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from scrapy import signals, Field
 from scrapy.xlib.pydispatch import dispatcher
-from ..contrib.exceptions import DupeValidationException
+from crawler.contrib.exceptions import DupeValidationException
 
 
 class DupeFilterPipeline(object):

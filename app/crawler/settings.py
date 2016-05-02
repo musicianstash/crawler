@@ -2,7 +2,7 @@
 
 # Scrapy settings for crawler project
 
-DEBUG = True
+DEBUG = False
 
 BOT_NAME = 'crawler'
 
@@ -24,15 +24,16 @@ ITEM_PIPELINES = {
     'crawler.pipelines.send.SendPipeline': 500,
 }
 
+SEND_ITEM_JSON_RPC_HOST = 'http://eap:8080/apiv1/'
+
+SEND_ITEM_JSON_RPC_METHOD = 'crawler.add_item'
+
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
     'crawler.middlewares.proxy.ProxyDownloaderMiddleware': 100,
     'crawler.middlewares.extensions.PyqueryDownloaderMiddleware': 543,
 }
-
-# Param used in SendPipeline.
-SEND_ITEM_API_URL = 'http://127.0.0.1:8000/apiv1/item/'
 
 PROXIES = [
     'http://rgrabn:2VpbBYTg@23.81.240.205:29842'
