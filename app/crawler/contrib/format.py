@@ -3,7 +3,7 @@ import re
 import ftfy
 
 
-price_re = re.compile('(\d+.\d+)')
+price_re = re.compile('(\d+.\d*)')
 
 
 def price_format(price):
