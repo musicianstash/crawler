@@ -10,6 +10,8 @@ services:
     networks:
       - default
       - eap_default
+    volumes:
+      - ./app:/usr/src/app
 
 networks:
   eap_default:
