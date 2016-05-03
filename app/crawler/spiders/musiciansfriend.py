@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 import re
 
+from ftfy import fix_text
+
 from pyquery import PyQuery
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule, Request
 
 from crawler.contrib.spiders.mixins.modular import ModularMixin
 from crawler.items import MusicGearItem
-from crawler.contrib.format import price_format
+from crawler.contrib import format
+
+DENY_LINKS = ['books', 'lifestyle', 'software', 'used']
 
 
 class MusiciansFriendSpider(ModularMixin, CrawlSpider):
@@ -16,18 +20,18 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
     item = MusicGearItem
 
     spider_store = 'Musician Friend'
-    spider_currency = 'THB'
-    spider_countries = ['US', 'TH', 'GB']
+    spider_currency = 'USD'
+    spider_countries = ['US']
 
     download_delay = 0.5
 
     start_urls = ['http://www.musiciansfriend.com/']
 
     rules = (
-        Rule(LinkExtractor(restrict_css='#nav-content', tags=['span'],
-                           attrs=['data-url'])),
+        Rule(LinkExtractor(restrict_css='#nav-content', deny=DENY_LINKS,
+                           tags=['span'], attrs=['data-url'])),
         Rule(LinkExtractor(restrict_css='.searchPagination')),
-        Rule(LinkExtractor(restrict_css='.productGrid .product', deny=['used']),
+        Rule(LinkExtractor(restrict_css='.productGrid .product', deny=DENY_LINKS),
              callback='parse_item'),
     )
 
@@ -69,7 +73,8 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
         return res.meta['item_data']['name']
 
     def parse_item_description(self, res):
-        return str(PyQuery(res.meta['item_data']['message']).text())
+        return (fix_text(res.meta['item_data']['message'])
+                if res.meta['item_data']['message'] else '')
 
     def parse_item_brand(self, res):
         return res.meta['item_data']['brand']
@@ -80,15 +85,20 @@ class MusiciansFriendSpider(ModularMixin, CrawlSpider):
     def parse_item_price(self, res):
         if res.meta.get('color_data'):
             price = res.meta['color_data'].get('msrp') or res.meta['color_data'].get('price')
-            return price_format(price)
-
-        return price_format(res.pq('.msrp').text())
+            return format.price_format(price)
+        return format.price_format(res.pq('#itemizedPrice .listPrice dd').text() or
+                                   res.pq('[itemprop="price"]').text())
 
     def parse_item_sale_price(self, res):
         if res.meta.get('color_data'):
-            return price_format(res.meta['color_data']['salePrice'])
+            return res.meta['color_data']['salePrice']
 
-        return price_format(res.pq('.topAlignedPrice').clone().remove('sup').text())
+        if not res.pq('.onSaleToday'):
+            return 0
+
+        price = self.parse_item_price(res)
+        sale_price = res.pq('.topAlignedPrice').clone().remove('sup').text()
+        return format.price_sale_format(price, sale_price)
 
     def parse_item_images(self, res):
         items = res.meta['image_data']['set']['item']
