@@ -2,7 +2,8 @@
 class ModularMixin(object):
 
     def parse_item(self, response):
-        response = self.process_item_response(response)
+        if hasattr(self, 'process_item_response'):
+            response = self.process_item_response(response)
 
         if hasattr(self, 'parse_items'):
             for context in self.parse_items(response):
