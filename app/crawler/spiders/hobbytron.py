@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from ftfy import fix_text
-
 from pyquery import PyQuery
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule, Request
@@ -69,7 +67,7 @@ class HobbyTronSpider(ModularMixin, CrawlSpider):
     def parse_item_images(self, res):
         items = res.pq('.gallery_thumbs img')
         if not items:
-            return res.pq('.product_icons img').attr('src')
+            return [res.pq('.product_icons img').attr('src')]
         return [i.attr('src') for i in items.items()]
 
     def parse_item_stock(self, res):
