@@ -3,7 +3,7 @@ import re
 import ftfy
 
 
-price_re = re.compile('(\d+.\d*)')
+price_re = re.compile('(\d+.\d+)')
 
 
 def price_format(price):
@@ -12,6 +12,8 @@ def price_format(price):
 
     if isinstance(price, str):
         return float(price_re.search(price.replace(',', '')).group(1))
+    elif isinstance(price, unicode):
+        return float(price_re.search(price.encode('utf-8')).group(1))
     return price
 
 
