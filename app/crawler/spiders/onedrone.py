@@ -71,7 +71,7 @@ class OneDroneSpider(ModularMixin, CrawlSpider):
     def parse_item_images(self, res):
         items = res.pq('.product-block .thumbnail')
         if not items:
-            return [res.pq('.thumbnail a').attr('href') or res.pq('.thumbnail img').attr('src')]
+            return [res.pq('.thumbnail a').attr('href')]
         return [items('a').attr('href') for i in items.items() if 'cache' not in i.text().lower()]
 
     def parse_item_stock(self, res):
