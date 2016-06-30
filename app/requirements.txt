@@ -1,6 +1,7 @@
 ftfy==4.1.1
 jsonschema==2.5.1
 pyquery==1.2.13
+simplejson==3.8.2
 scrapy==1.1.0rc4
 scrapyd==1.1.0
 txJSON-RPC==0.5
