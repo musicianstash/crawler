@@ -4,7 +4,6 @@ services:
   crawler:
     container_name: crawler
     build: ./app
-    env_file: .env
     ports:
       - "6800:6800"
     networks:
@@ -12,6 +11,7 @@ services:
       - eap_default
     volumes:
       - ./app:/usr/src/app
+    env_file: .env
 
 networks:
   eap_default:
