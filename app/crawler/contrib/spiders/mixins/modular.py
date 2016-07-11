@@ -2,6 +2,11 @@
 class ModularMixin(object):
 
     def parse_item(self, response):
+        """
+        Override this method if you want to make additional requests to fetch more data.
+        :param response:
+        :return:
+        """
         if hasattr(self, 'process_item_response'):
             response = self.process_item_response(response)
 
@@ -32,5 +37,11 @@ class ModularMixin(object):
 
         return item
 
-    def process_item_resposne(self, response):
+    def process_item_response(self, response):
+        """
+        Override this method to process response, such as loading JSON data, or setting
+        PyQuery object.
+        :param response:
+        :return:
+        """
         return response
